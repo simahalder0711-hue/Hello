@@ -1,1 +1,145 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎂</title>
+
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+text-align:center;
+background:linear-gradient(135deg,#ffb6d9,#ffffff);
+overflow:hidden;
+}
+
+.slide{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+.active{
+display:flex;
+}
+
+h1{
+color:#ff2e88;
+font-size:40px;
+}
+
+button{
+padding:10px 20px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#ff2e88;
+color:white;
+}
+
+.balloon{
+position:absolute;
+width:60px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Slide 1 -->
+<div class="slide active" id="slide1">
+<h1>🎉 Happy Birthday Sourabh 🎉</h1>
+<p>A special surprise for you ❤️</p>
+<button onclick="nextSlide()">Start</button>
+</div>
+
+<!-- Slide 2 Balloon Game -->
+<div class="slide" id="slide2">
+<h1>Pop Balloons in 7 Seconds 🎈</h1>
+<p id="timer">7</p>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide" id="slide3">
+<h1>Wish You Lots of Happiness ❤️</h1>
+<p>You are very special 🎂</p>
+</div>
+
+<script>
+
+let slide=1
+
+function nextSlide(){
+
+document.getElementById("slide"+slide).classList.remove("active")
+slide++
+document.getElementById("slide"+slide).classList.add("active")
+
+if(slide==2){
+startGame()
+}
+
+}
+
+function startGame(){
+
+let time=7
+let timer=document.getElementById("timer")
+
+let countdown=setInterval(()=>{
+time--
+timer.innerText=time
+
+if(time<=0){
+clearInterval(countdown)
+removeBalloons()
+nextSlide()
+}
+
+},1000)
+
+spawnBalloon()
+
+}
+
+function spawnBalloon(){
+
+for(let i=0;i<15;i++){
+
+let b=document.createElement("img")
+b.src="https://cdn-icons-png.flaticon.com/512/616/616490.png"
+b.className="balloon"
+
+b.style.left=Math.random()*90+"%"
+b.style.top=Math.random()*90+"%"
+
+b.onclick=function(){
+b.remove()
+playPop()
+}
+
+document.body.appendChild(b)
+
+}
+
+}
+
+function removeBalloons(){
+document.querySelectorAll(".balloon").forEach(b=>b.remove())
+}
+
+function playPop(){
+let audio=new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3")
+audio.play()
+}
+
+</script>
+
+</body>
+</html>
